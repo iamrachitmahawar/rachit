@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Leela Store</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #111827;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .logo p {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: #111827;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+    }
+
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+      url('https://www.magnific.com/free-vector/wireless-technology-isometric-composition-poster_4016558.htm#fromView=search&page=1&position=2&uuid=dc304d8e-d422-4bbf-8a6e-1b3f905be1f8&query=electronics');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      color: white;
+    }
+
+    .hero-content h2 {
+      font-size: 64px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
+
+    .hero-content p {
+      font-size: 22px;
+      margin-bottom: 35px;
+      color: #dbeafe;
+    }
+
+    .hero-btn {
+      display: inline-block;
+      padding: 16px 38px;
+      background: #2563eb;
+      color: white;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      transition: 0.3s ease;
+      box-shadow: 0 10px 30px rgba(37,99,235,0.4);
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-3px);
+      background: #1d4ed8;
+    }
+
+    .products-section {
+      padding: 100px 20px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h3 {
+      font-size: 44px;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .section-title p {
+      color: #64748b;
+      font-size: 17px;
+    }
+
+    .carousel {
+      display: flex;
+      gap: 28px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 10px;
+    }
+
+    .carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .carousel::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 50px;
+    }
+
+    .product-card {
+      min-width: 300px;
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+      scroll-snap-align: center;
+      transition: 0.3s ease;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 24px;
+    }
+
+    .product-info h4 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: #2563eb;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .add-cart-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .add-cart-btn:hover {
+      background: #2563eb;
+    }
+
+    .cart-floating {
+      position: fixed;
+      right: 22px;
+      bottom: 95px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: #111827;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #ef4444;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .cart-modal {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      background: white;
+      z-index: 1000;
+      transition: 0.4s ease;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+      overflow-y: auto;
+      padding: 28px;
+    }
+
+    .cart-modal.active {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .cart-header h3 {
+      font-size: 28px;
+    }
+
+    .close-cart {
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .cart-item {
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+
+    .cart-item h4 {
+      margin-bottom: 6px;
+    }
+
+    .customer-form input {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      background: #2563eb;
+      color: white;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: #25d366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .whatsapp-btn img {
+      width: 34px;
+    }
+
+    footer {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 70px;
+    }
+
+    footer h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    footer p {
+      color: #cbd5e1;
+      margin-top: 8px;
+    }
+
+    @media(max-width:768px) {
+      .hero-content h2 {
+        font-size: 42px;
+      }
+
+      .hero-content p {
+        font-size: 18px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .section-title h3 {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="navbar">
+      <div class="logo">
+        <h1>The Leela Store</h1>
+        <p>Genuine Product Reseller</p>
+      </div>
+
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Premium Genuine Products at Best Prices</h2>
+      <p>Trusted reseller store with quality electronics & lifestyle essentials.</p>
+      <a href="#products" class="hero-btn">Shop Now</a>
+    </div>
+  </section>
+
+  <section class="products-section" id="products">
+    <div class="section-title">
+      <h3>Featured Products</h3>
+      <p>Browse our latest genuine and premium products</p>
+    </div>
+
+    <div class="carousel" id="carousel">
+
+      <div class="product-card">
+        <img src="https://i.ibb.co/357Zqb7V/image.jpg" alt="Wireless Earbuds">
+        <div class="product-info">
+          <h4>Wireless Earbuds</h4>
+          <div class="price">₹1,499</div>
+          <button class="add-cart-btn" onclick="addToCart('Wireless Earbuds', '₹1,499')">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.ibb.co/fV02xZG1/image.jpg" alt="Smart Watch">
+        <div class="product-info">
+          <h4>Smart Watch</h4>
+          <div class="price">₹2,299</div>
+          <button class="add-cart-btn" onclick="addToCart('Smart Watch', '₹2,299')">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.ibb.co/cXZVxKHM/image.jpg" alt="Bluetooth Speaker">
+        <div class="product-info">
+          <h4>Bluetooth Speaker</h4>
+          <div class="price">₹1,899</div>
+          <button class="add-cart-btn" onclick="addToCart('Bluetooth Speaker', '₹1,899')">Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://i.ibb.co/Jwhk6kNw/image.jpg" alt="Gaming Headphones">
+        <div class="product-info">
+          <h4>Gaming Headphones</h4>
+          <div class="price">₹2,799</div>
+          <button class="add-cart-btn" onclick="addToCart('Gaming Headphones', '₹2,799')">Add to Cart</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="cart-floating" onclick="toggleCart()">
+    🛒
+    <div class="cart-count" id="cartCount">0</div>
+  </div>
+
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <span class="close-cart" onclick="toggleCart()">×</span>
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="customer-form">
+      <input type="text" id="customerName" placeholder="Your Name">
+      <input type="tel" id="customerPhone" placeholder="Phone Number">
+
+      <button class="checkout-btn" onclick="placeOrder()">
+        Place Order
+      </button>
+    </div>
+  </div>
+
+  <a href="https://wa.me/8824053480" class="whatsapp-btn" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+
+  <footer id="contact">
+    <h3>The Leela Store</h3>
+    <p>Genuine Product Reseller</p>
+    <p>Email: rachitmahawar526@gmail.com</p>
+    <p>© 2026 The Leela Store. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let cart = [];
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCart();
+    }
+
+    function updateCart() {
+      document.getElementById('cartCount').innerText = cart.length;
+
+      let cartItems = document.getElementById('cartItems');
+      cartItems.innerHTML = '';
+
+      cart.forEach((item, index) => {
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <h4>${item.name}</h4>
+            <p>${item.price}</p>
+          </div>
+        `;
+      });
+    }
+
+    function toggleCart() {
+      document.getElementById('cartModal').classList.toggle('active');
+    }
+
+    function placeOrder() {
+      const name = document.getElementById('customerName').value;
+      const phone = document.getElementById('customerPhone').value;
+
+      if(name === '' || phone === '') {
+        alert('Please fill all details');
+        return;
+      }
+
+      if(cart.length === 0) {
+        alert('Your cart is empty');
+        return;
+      }
+
+      let items = '';
+
+      cart.forEach((item, index) => {
+        items += `${index + 1}. ${item.name} - ${item.price}%0A`;
+      });
+
+      const subject = 'New Order - The Leela Store';
+
+      const body = `Customer Name: ${name}%0APhone Number: ${phone}%0A%0AOrdered Items:%0A${items}`;
+
+      window.location.href = `mailto:rachitmahawar526@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    // Auto Sliding Carousel
+    const carousel = document.getElementById('carousel');
+
+    let scrollAmount = 0;
+
+    setInterval(() => {
+      if(scrollAmount >= carousel.scrollWidth - carousel.clientWidth) {
+        scrollAmount = 0;
+      } else {
+        scrollAmount += 320;
+      }
+
+      carousel.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }, 3000);
+  </script>
+
+</body>
+</html>
